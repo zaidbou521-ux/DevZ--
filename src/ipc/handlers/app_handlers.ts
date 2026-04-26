@@ -2853,9 +2853,6 @@ export function registerAppHandlers() {
     logger.warn("Failed to reconcile cloud sandboxes on startup:", error);
   });
 
-  // Start the garbage collection for idle apps
-  startAppGarbageCollection();
-
   function getCommand({
     appId,
     installCommand,
@@ -2879,4 +2876,4 @@ export function registerAppHandlers() {
       await killProcessOnPort(port);
     }
   }
-}
+})
