@@ -1,0 +1,82 @@
+import { db } from "../../db";
+import { chats, messages } from "../../db/schema";
+import { eq, and, like, desc } from "drizzle-orm";
+import { createTypedHandler } from "./base";
+import { securityContracts } from "../types/security";
+import type { SecurityFinding } from "../types/security";
+import { DevZError, DevZErrorKind } from "@/errors/devz_error";
+
+export function registerSecurityHandlers() {
+  createTypedHandler(
+    securityContracts.getLatestSecurityReview,
+    async (_, appId) => {
+      if (!appId) {
+        throw new DevZError("App ID is required", DevZErrorKind.Validation);
+      }
+
+      // Query for the most recent message with security findings
+      // Use database filtering instead of loading all data into memory
+      const result = await db
+        .select({
+          content: messages.content,
+          createdAt: messages.createdAt,
+          chatId: messages.chatId,
+        })
+        .from(messages)
+        .innerJoin(chats, eq(messages.chatId, chats.id))
+        .where(
+          and(
+            eq(chats.appId, appId),
+            eq(messages.role, "assistant"),
+            like(messages.content, "%<devz-security-finding>%"),
+          ),
+        )
+        .orderBy(desc(messages.createdAt))
+        .limit(1);
+
+      if (result.length === 0) {
+        throw new DevZError(
+          "No security review found for this app",
+          DevZErrorKind.NotFound,
+        );
+      }
+
+      const message = result[0];
+      const findings = parseSecurityFindings(message.content);
+
+      if (findings.length === 0) {
+        throw new DevZError(
+          "No security review found for this app",
+          DevZErrorKind.NotFound,
+        );
+      }
+
+      return {
+        findings,
+        timestamp: message.createdAt.toISOString(),
+        chatId: message.chatId,
+      };
+    },
+  );
+}
+
+function parseSecurityFindings(content: string): SecurityFinding[] {
+  const findings: SecurityFinding[] = [];
+
+  // Regex to match devz-security-finding tags
+  // Using lazy quantifier with proper boundaries to prevent catastrophic backtracking
+  const regex =
+    /<devz-security-finding\s+title="([^"]+)"\s+level="(critical|high|medium|low)">([\s\S]*?)<\/devz-security-finding>/g;
+
+  let match;
+  while ((match = regex.exec(content)) !== null) {
+    const [, title, level, description] = match;
+    findings.push({
+      title: title.trim(),
+      level: level as "critical" | "high" | "medium" | "low",
+      description: description.trim(),
+    });
+  }
+
+  return findings;
+}

@@ -1,0 +1,23 @@
+- paragraph: tc=add-supabase
+- paragraph: Adding supabase...
+- img
+- text: Integration Choose a database provider
+- radiogroup "Choose a database provider":
+  - 'radio "Supabase Visit Supabase website Complete backend as a service: Postgres database, storage and edge functions." [checked]':
+    - text: ""
+    - link "Visit Supabase website":
+      - img
+    - paragraph: "Complete backend as a service: Postgres database, storage and edge functions."
+- button "Set up Supabase"
+- button "Copy":
+  - img
+- img
+- text: test-model
+- img
+- text: less than a minute ago
+- button "Undo":
+  - img
+  - text: ""
+- button "Retry":
+  - img
+  - text: ""
