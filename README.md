@@ -2,8 +2,6 @@
 
 DevZ is a local, open-source development platform. It's fast, private, and fully under your control — a powerful IDE and development environment running right on your machine.
 
-مشروع هو برنامج ديسك توب 
-يعمل على طريق برمت تعطيه مثلا برمت اريد صنع موقع لمقهى ai يبدا يعمل على جسب ووش قلت انت موقع يبدا يفكر بعدها يبدا ينجز خطوة خطوة حتى يخلص يعطيك نتيجة قدامك ديركت وش دار الخ 
 
 
 More info at: [https://devz.sh/](https://devz.sh/)
