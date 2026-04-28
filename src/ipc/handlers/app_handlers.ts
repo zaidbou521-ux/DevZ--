@@ -2876,4 +2876,4 @@ export function registerAppHandlers() {
       await killProcessOnPort(port);
     }
   }
-})
+}
