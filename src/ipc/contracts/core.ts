@@ -213,8 +213,8 @@ export function createEventClient<
     (client as any)[methodName] = (handler: (payload: unknown) => void) => {
       const ipcRenderer = getIpcRenderer();
       if (!ipcRenderer) {
-        console.error(
-          `[${event.channel}] IPC renderer not available. Make sure this is called from the renderer process.`,
+        console.debug(
+          `[${event.channel}] IPC renderer not available (web mode).`,
         );
         return () => {};
       }

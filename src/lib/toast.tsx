@@ -21,8 +21,17 @@ export const showSuccess = (message: string) => {
  * Show an error toast
  * @param message The error message to display
  */
+const IPC_UNAVAILABLE = "IPC renderer not available";
+
 export const showError = (message: any) => {
   const errorMessage = message.toString();
+
+  // In web mode (no Electron), IPC calls fail silently — don't show toast.
+  if (errorMessage.includes(IPC_UNAVAILABLE)) {
+    console.debug("[web-mode] suppressed IPC error:", errorMessage);
+    return;
+  }
+
   console.error(message);
 
   const onCopy = (toastId: string | number) => {
