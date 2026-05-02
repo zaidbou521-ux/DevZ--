@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ipc, type LanguageModel } from "@/ipc/types";
 import { queryKeys } from "@/lib/queryKeys";
+import { isIpcUnavailableError } from "@/lib/ipcUtils";
 
 /**
  * Fetches the list of available language models for a specific provider.
@@ -11,18 +12,23 @@ import { queryKeys } from "@/lib/queryKeys";
 export function useLanguageModelsForProvider(providerId: string | undefined) {
   return useQuery<
     LanguageModel[],
-    Error // Specify Error type for better error handling
+    Error
   >({
     queryKey: queryKeys.languageModels.forProvider({
       providerId: providerId ?? "",
     }),
     queryFn: async () => {
       if (!providerId) {
-        // Avoid calling IPC if providerId is not set
-        // Return an empty array as it's a query, not an error state
         return [];
       }
-      return ipc.languageModel.getModels({ providerId });
+      try {
+        return await ipc.languageModel.getModels({ providerId });
+      } catch (e) {
+        if (isIpcUnavailableError(e)) {
+          return [];
+        }
+        throw e;
+      }
     },
     enabled: !!providerId,
   });

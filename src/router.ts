@@ -22,7 +22,8 @@ const routeTree = rootRoute.addChildren([
   mediaRoute,
   chatRoute,
   appDetailsRoute,
-  settingsRoute.addChildren([providerSettingsRoute]),
+  settingsRoute,
+  providerSettingsRoute,
 ]);
 
 // src/components/NotFoundRedirect.tsx

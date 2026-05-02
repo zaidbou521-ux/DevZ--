@@ -28,7 +28,7 @@ export function isProviderSetup(
     return false;
   }
 
-  const providerSettings = settings?.providerSettings[provider];
+  const providerSettings = settings?.providerSettings?.[provider];
 
   // Vertex uses service account credentials instead of an API key
   if (provider === "vertex") {
