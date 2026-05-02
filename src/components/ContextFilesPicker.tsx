@@ -218,8 +218,8 @@ export function ContextFilesPicker() {
               <div className="rounded-md border border-dashed p-4 text-center">
                 <p className="text-sm text-muted-foreground">
                   {isSmartContextEnabled
-                    ? "Dyad will use Smart Context to automatically find the most relevant files to use as context."
-                    : "Dyad will use the entire codebase as context."}
+                    ? "DevZ will use Smart Context to automatically find the most relevant files to use as context."
+                    : "DevZ will use the entire codebase as context."}
                 </p>
               </div>
             )}

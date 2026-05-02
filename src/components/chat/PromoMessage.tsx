@@ -1,3 +1,4 @@
+import { openUrl } from "@/lib/openUrl";
 import { ipc } from "@/ipc/types";
 import React from "react";
 
@@ -36,7 +37,7 @@ export function Message({ spans }: MessageConfig) {
                   if (span.action) {
                     span.action();
                   } else if (span.url) {
-                    ipc.system.openExternalUrl(span.url);
+                    openUrl(span.url);
                   }
                 }}
                 className="text-blue-600 hover:text-blue-800 underline cursor-pointer"
@@ -56,7 +57,7 @@ export function Message({ spans }: MessageConfig) {
 export const TURBO_EDITS_PROMO_MESSAGE: MessageConfig = {
   spans: [
     { type: "text", content: "Tired of waiting on AI?" },
-    { type: "link", content: " Get Dyad Pro", url: "https://dyad.sh/pro#ai" },
+    { type: "link", content: " Get DevZ Pro", url: "https://dyad.sh/pro#ai" },
     { type: "text", content: " for faster edits with Turbo Edits." },
   ],
 };
@@ -66,7 +67,7 @@ export const SMART_CONTEXT_PROMO_MESSAGE: MessageConfig = {
     { type: "text", content: "Save up to 3x on AI costs with " },
     {
       type: "link",
-      content: "Dyad Pro's Smart Context",
+      content: "DevZ Pro's Smart Context",
       url: "https://dyad.sh/pro#ai",
     },
   ],
@@ -90,7 +91,7 @@ export const REDDIT_TIP: MessageConfig = {
     },
     {
       type: "link",
-      content: "Dyad subreddit",
+      content: "DevZ subreddit",
       url: "https://www.reddit.com/r/dyadbuilders/",
     },
   ],

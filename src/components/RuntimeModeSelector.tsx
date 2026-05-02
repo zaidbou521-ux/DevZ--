@@ -10,6 +10,7 @@ import { useSettings } from "@/hooks/useSettings";
 import { useUserBudgetInfo } from "@/hooks/useUserBudgetInfo";
 import { showError } from "@/lib/toast";
 import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 import { useAtomValue } from "jotai";
 import { appUrlAtom } from "@/atoms/appAtoms";
 import { useTranslation } from "react-i18next";
@@ -113,11 +114,11 @@ export function RuntimeModeSelector() {
       </div>
       {showCloudSandboxOption && !hasCloudSandboxAccess && (
         <div className="text-sm text-muted-foreground bg-muted/40 p-2 rounded">
-          Cloud sandboxes are a Dyad Pro feature.{" "}
+          Cloud sandboxes are a DevZ Pro feature.{" "}
           <button
             type="button"
             className="underline font-medium cursor-pointer text-primary"
-            onClick={() => ipc.system.openExternalUrl("https://dyad.sh/pro#ai")}
+            onClick={() => openUrl("https://dyad.sh/pro#ai")}
           >
             Upgrade to Pro
           </button>
@@ -130,7 +131,7 @@ export function RuntimeModeSelector() {
             type="button"
             className="underline font-medium cursor-pointer"
             onClick={() =>
-              ipc.system.openExternalUrl(
+              openUrl(
                 "https://www.docker.com/products/docker-desktop/",
               )
             }

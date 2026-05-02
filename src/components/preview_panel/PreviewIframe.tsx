@@ -33,6 +33,7 @@ import {
 import { selectedChatIdAtom } from "@/atoms/chatAtoms";
 import { CopyErrorMessage } from "@/components/CopyErrorMessage";
 import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 
 import { useParseRouter } from "@/hooks/useParseRouter";
 import {
@@ -160,7 +161,7 @@ const ErrorBanner = ({ error, onDismiss, onAIFix }: ErrorBannerProps) => {
             {isDockerError
               ? "Make sure Docker Desktop is running and try restarting the app."
               : isSyncError
-                ? "Dyad could not upload your latest local changes to the cloud sandbox. Check your network connection or wait for sync to recover."
+                ? "DevZ could not upload your latest local changes to the cloud sandbox. Check your network connection or wait for sync to recover."
                 : isInternalDyadError
                   ? "Try restarting the Dyad app or restarting your computer to see if that fixes the error."
                   : "Check if restarting the app fixes the error."}
@@ -453,13 +454,13 @@ export const PreviewIframe = ({ loading }: { loading: boolean }) => {
     ) {
       setErrorMessage({
         message: cloudSandboxStatus.lastErrorMessage
-          ? cloudSandboxStatus.lastErrorMessage.includes("Dyad stopped")
+          ? cloudSandboxStatus.lastErrorMessage.includes("DevZ stopped")
             ? cloudSandboxStatus.lastErrorMessage
             : cloudSandboxStatus.terminationReason === "credits_exhausted"
-              ? "This cloud sandbox was stopped because your Dyad Pro credits ran out. Add credits and start it again."
+              ? "This cloud sandbox was stopped because your DevZ Pro credits ran out. Add credits and start it again."
               : "This cloud sandbox was stopped because Dyad could not confirm billing. Please try starting it again."
           : cloudSandboxStatus.terminationReason === "credits_exhausted"
-            ? "This cloud sandbox was stopped because your Dyad Pro credits ran out. Add credits and start it again."
+            ? "This cloud sandbox was stopped because your DevZ Pro credits ran out. Add credits and start it again."
             : "This cloud sandbox was stopped because Dyad could not confirm billing. Please try starting it again.",
         source: "dyad-app",
       });
@@ -1659,7 +1660,7 @@ export const PreviewIframe = ({ loading }: { loading: boolean }) => {
                     originalUrl,
                     createCloudSandboxShareLink,
                   });
-                  await ipc.system.openExternalUrl(url);
+                  await openUrl(url);
                 } catch (error) {
                   showError(
                     error instanceof Error

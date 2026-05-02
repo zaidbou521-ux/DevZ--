@@ -84,7 +84,7 @@
     "enableDyadPro": "Ativar Dyad Pro",
     "toggleDyadPro": "Alternar para ativar o Dyad Pro",
     "apiKeyEmpty": "A Chave de API não pode estar vazia.",
-    "errorTogglingPro": "Erro ao alternar Dyad Pro: {{error}}",
+    "errorTogglingPro": "Erro ao alternar DevZ Pro: {{error}}",
     "failedSaveApiKey": "Falha ao salvar a chave de API.",
     "failedDeleteApiKey": "Falha ao excluir a chave de API."
   },

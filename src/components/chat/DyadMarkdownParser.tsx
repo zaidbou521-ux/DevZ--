@@ -22,6 +22,7 @@ import { CustomTagState } from "./stateTypes";
 import { DyadOutput } from "./DyadOutput";
 import { DyadProblemSummary } from "./DyadProblemSummary";
 import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 import { DyadMcpToolCall } from "./DyadMcpToolCall";
 import { DyadMcpToolResult } from "./DyadMcpToolResult";
 import { DyadWebSearchResult } from "./DyadWebSearchResult";
@@ -124,7 +125,7 @@ const customLink = ({
       const url = props.href;
       if (url) {
         e.preventDefault();
-        ipc.system.openExternalUrl(url);
+        openUrl(url);
       }
     }}
   />

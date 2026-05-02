@@ -17,6 +17,7 @@ import { useLocalLMSModels } from "@/hooks/useLMStudioModels";
 import { useLanguageModelsByProviders } from "@/hooks/useLanguageModelsByProviders";
 
 import { ipc, LocalModel } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 import { useLanguageModelProviders } from "@/hooks/useLanguageModelProviders";
 import { useSettings } from "@/hooks/useSettings";
 import { PriceBadge } from "@/components/PriceBadge";
@@ -197,13 +198,11 @@ export function ModelPicker() {
                 size="sm"
                 className="cursor-pointer w-full bg-indigo-600 hover:bg-indigo-700 text-white hover:text-white border-indigo-600"
                 onClick={() => {
-                  ipc.system.openExternalUrl(
-                    "https://academy.dyad.sh/subscription",
-                  );
+                  openUrl("https://academy.dyad.sh/subscription");
                   setOpen(false);
                 }}
               >
-                Upgrade to Dyad Pro
+                Upgrade to DevZ Pro
               </Button>
             </div>
             <DropdownMenuSeparator />
@@ -288,8 +287,8 @@ export function ModelPicker() {
               {/* Primary providers as submenus */}
               {primaryProviders.map(([providerId, models]) => {
                 models = models.filter((model) => {
-                  // Don't show free models if Dyad Pro is enabled because
-                  // we will use the paid models (in Dyad Pro backend) which
+                  // Don't show free models if DevZ Pro is enabled because
+                  // we will use the paid models (in DevZ Pro backend) which
                   // don't have the free limitations.
                   if (
                     isDevZProEnabled(settings) &&
@@ -302,7 +301,7 @@ export function ModelPicker() {
                 const provider = providers?.find((p) => p.id === providerId);
                 const providerDisplayName =
                   provider?.id === "auto"
-                    ? "Dyad Turbo"
+                    ? "DevZ Turbo"
                     : (provider?.name ?? providerId);
                 return (
                   <DropdownMenuSub key={providerId}>

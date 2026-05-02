@@ -17,6 +17,7 @@ import SetupProviderCard from "@/components/SetupProviderCard";
 
 import { useState, useEffect, useCallback } from "react";
 import { ipc, NodeSystemInfo } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 import {
   Accordion,
   AccordionContent,
@@ -134,7 +135,7 @@ export function SetupBanner() {
   const handleNodeInstallClick = useCallback(async () => {
     posthog.capture("setup-flow:start-node-install-click");
     setNodeInstallStep("waiting-for-continue");
-    ipc.system.openExternalUrl(nodeSystemInfo!.nodeDownloadUrl);
+    openUrl(nodeSystemInfo!.nodeDownloadUrl);
   }, [nodeSystemInfo, setNodeInstallStep]);
 
   const finishNodeInstall = useCallback(async () => {
@@ -244,7 +245,7 @@ export function SetupBanner() {
                       <a
                         className="text-blue-500 dark:text-blue-400 hover:underline"
                         onClick={() => {
-                          ipc.system.openExternalUrl(
+                          openUrl(
                             "https://nodejs.org/en/download",
                           );
                         }}
@@ -329,10 +330,10 @@ export function SetupBanner() {
                 onClick={handleDyadProSetupClick}
                 tabIndex={isNodeSetupComplete ? 0 : -1}
                 leadingIcon={
-                  <img src={logo} alt="Dyad Logo" className="w-6 h-6 mr-0.5" />
+                  <img src={logo} alt="DevZ Logo" className="w-6 h-6 mr-0.5" />
                 }
-                title="Start with Dyad Pro free trial"
-                subtitle="Unlock the full power of Dyad"
+                title="Start with DevZ Pro free trial"
+                subtitle="Unlock the full power of DevZ"
                 chip={<>Recommended</>}
               />
               <div className="mt-2 flex gap-2">
@@ -408,7 +409,7 @@ function NodeJsHelpCallout() {
         If you run into issues, read our{" "}
         <a
           onClick={() => {
-            ipc.system.openExternalUrl("https://www.dyad.sh/docs/help/nodejs");
+            openUrl("https://www.dyad.sh/docs/help/nodejs");
           }}
           className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
         >

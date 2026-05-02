@@ -20,6 +20,7 @@ import {
   CopyIcon,
 } from "lucide-react";
 import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 import {
   type ReactNode,
   useState,
@@ -77,7 +78,7 @@ function formatSettingsLines(settings: UserSettings | null): string {
     `- Selected Model: ${settings.selectedModel?.provider}:${settings.selectedModel?.name}`,
     `- Chat Mode: ${settings.selectedChatMode ?? "default"}`,
     `- Auto Approve Changes: ${settings.autoApproveChanges ?? "n/a"}`,
-    `- Dyad Pro Enabled: ${settings.enableDyadPro ?? "n/a"}`,
+    `- DevZ Pro Enabled: ${settings.enableDyadPro ?? "n/a"}`,
     `- Thinking Budget: ${settings.thinkingBudget ?? "n/a"}`,
     `- Runtime Mode: ${settings.runtimeMode2 ?? "n/a"}`,
     `- Release Channel: ${settings.releaseChannel ?? "n/a"}`,
@@ -91,7 +92,7 @@ function formatSystemInfoSection(
   userBudget: UserBudgetInfo | undefined,
 ): string {
   return `## System Information
-- Dyad Version: ${debugInfo.dyadVersion}
+- DevZ Version: ${debugInfo.dyadVersion}
 - Platform: ${debugInfo.platform}
 - Architecture: ${debugInfo.architecture}
 - Node Version: ${debugInfo.nodeVersion || "n/a"}
@@ -122,7 +123,7 @@ function openGitHubIssue(params: {
     labels: labels.join(","),
     body: params.body,
   });
-  ipc.system.openExternalUrl(`${GITHUB_ISSUES_BASE}?${qs.toString()}`);
+  openUrl(`${GITHUB_ISSUES_BASE}?${qs.toString()}`);
 }
 
 // =============================================================================
@@ -321,7 +322,7 @@ ${formatLogsSection(debugInfo)}
       });
     } catch (error) {
       console.error("Failed to prepare bug report:", error);
-      ipc.system.openExternalUrl(GITHUB_ISSUES_BASE);
+      openUrl(GITHUB_ISSUES_BASE);
     } finally {
       setIsLoading(false);
     }
@@ -442,7 +443,7 @@ ${formatLogsSection(debugInfo)}
       skipInitial={!hasNavigated.current}
     >
       <DialogHeader>
-        <DialogTitle>Need help with Dyad?</DialogTitle>
+        <DialogTitle>Need help with DevZ?</DialogTitle>
       </DialogHeader>
       <DialogDescription>
         If you need help or want to report an issue, here are some options:
@@ -455,14 +456,14 @@ ${formatLogsSection(debugInfo)}
             onClick={() => setIsHelpBotOpen(true)}
             className="w-full py-6 border-primary/50 shadow-sm shadow-primary/10 transition-all hover:shadow-md hover:shadow-primary/15"
           >
-            <SparklesIcon className="mr-2 h-5 w-5" /> Chat with Dyad help bot
+            <SparklesIcon className="mr-2 h-5 w-5" /> Chat with DevZ help bot
             (Pro)
           </Button>
         ) : (
           <Button
             variant="outline"
             onClick={() =>
-              ipc.system.openExternalUrl("https://www.dyad.sh/docs")
+              openUrl("https://www.dyad.sh/docs")
             }
             className="w-full py-6 bg-(--background-lightest)"
           >
@@ -486,7 +487,7 @@ ${formatLogsSection(debugInfo)}
             <div className="flex items-center gap-2">
               <MessageSquareIcon className="h-4 w-4 text-primary" />
               <span className="text-sm font-semibold">
-                AI / Dyad Pro issues
+                AI / DevZ Pro issues
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
@@ -517,7 +518,7 @@ ${formatLogsSection(debugInfo)}
               <span className="text-sm font-semibold">Non-AI issues</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Includes error logs to troubleshoot non-AI issues with Dyad (UI
+              Includes error logs to troubleshoot non-AI issues with DevZ (UI
               bugs, crashes, setup problems, etc.).
             </p>
             <Button
@@ -584,7 +585,7 @@ ${formatLogsSection(debugInfo)}
           </ReviewDetailsSection>
 
           <ReviewDetailsSection title="System Information" mono={false}>
-            <p>Dyad Version: {debugBundle.system.dyadVersion}</p>
+            <p>DevZ Version: {debugBundle.system.dyadVersion}</p>
             <p>Platform: {debugBundle.system.platform}</p>
             <p>Architecture: {debugBundle.system.architecture}</p>
             <p>

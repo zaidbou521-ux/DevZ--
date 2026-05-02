@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { DyadCard, DyadCardHeader, DyadBadge } from "./DyadCardPrimitives";
 import { getCompletedIntegrationProvider } from "./dyadAddIntegrationUtils";
 import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 
 interface DyadAddIntegrationProps {
   children: React.ReactNode;
@@ -246,13 +247,13 @@ export const DyadAddIntegration: React.FC<DyadAddIntegrationProps> = ({
                 <span
                   onClick={(e) => {
                     e.stopPropagation();
-                    ipc.system.openExternalUrl(option.url);
+                    openUrl(option.url);
                   }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
                       e.stopPropagation();
-                      ipc.system.openExternalUrl(option.url);
+                      openUrl(option.url);
                     }
                   }}
                   tabIndex={0}

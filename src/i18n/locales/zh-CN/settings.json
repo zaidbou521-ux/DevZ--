@@ -84,7 +84,7 @@
     "enableDyadPro": "启用 Dyad Pro",
     "toggleDyadPro": "切换以启用 Dyad Pro",
     "apiKeyEmpty": "API 密钥不能为空。",
-    "errorTogglingPro": "切换 Dyad Pro 时出错：{{error}}",
+    "errorTogglingPro": "切换 DevZ Pro 时出错：{{error}}",
     "failedSaveApiKey": "保存 API 密钥失败。",
     "failedDeleteApiKey": "删除 API 密钥失败。"
   },

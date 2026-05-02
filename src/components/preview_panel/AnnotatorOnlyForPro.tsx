@@ -1,6 +1,7 @@
 import { Lock, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 
 interface AnnotatorOnlyForProProps {
   onGoBack: () => void;
@@ -8,7 +9,7 @@ interface AnnotatorOnlyForProProps {
 
 export const AnnotatorOnlyForPro = ({ onGoBack }: AnnotatorOnlyForProProps) => {
   const handleGetPro = () => {
-    ipc.system.openExternalUrl("https://dyad.sh/pro");
+    openUrl("https://dyad.sh/pro");
   };
 
   return (
@@ -36,7 +37,7 @@ export const AnnotatorOnlyForPro = ({ onGoBack }: AnnotatorOnlyForProProps) => {
         </h2>
         <p className="text-muted-foreground mb-10 text-center max-w-md text-base leading-relaxed">
           Unlock the ability to annotate screenshots and enhance your workflow
-          with Dyad Pro.
+          with DevZ Pro.
         </p>
 
         {/* Get Pro Button */}
@@ -45,7 +46,7 @@ export const AnnotatorOnlyForPro = ({ onGoBack }: AnnotatorOnlyForProProps) => {
           size="lg"
           className="px-8 shadow-md hover:shadow-lg transition-all"
         >
-          Get Dyad Pro
+          Get DevZ Pro
         </Button>
       </div>
     </div>

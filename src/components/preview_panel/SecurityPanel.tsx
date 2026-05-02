@@ -3,6 +3,7 @@ import { selectedAppIdAtom } from "@/atoms/appAtoms";
 import { selectedChatIdAtom } from "@/atoms/chatAtoms";
 import { useSecurityReview } from "@/hooks/useSecurityReview";
 import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 import { queryKeys } from "@/lib/queryKeys";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -255,7 +256,7 @@ function SecurityHeader({
               <a
                 className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
                 onClick={() =>
-                  ipc.system.openExternalUrl(
+                  openUrl(
                     "https://www.dyad.sh/docs/guides/security-review",
                   )
                 }

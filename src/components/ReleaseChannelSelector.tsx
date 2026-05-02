@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 import type { ReleaseChannel } from "@/lib/schemas";
 import { useTranslation } from "react-i18next";
 
@@ -29,7 +30,7 @@ export function ReleaseChannelSelector() {
         action: {
           label: "Download Stable",
           onClick: () => {
-            ipc.system.openExternalUrl("https://dyad.sh/download");
+            openUrl("https://dyad.sh/download");
           },
         },
       });

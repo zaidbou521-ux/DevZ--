@@ -87,7 +87,7 @@
     "enableDyadPro": "Enable Dyad Pro",
     "toggleDyadPro": "Toggle to enable Dyad Pro",
     "apiKeyEmpty": "API Key cannot be empty.",
-    "errorTogglingPro": "Error toggling Dyad Pro: {{error}}",
+    "errorTogglingPro": "Error toggling DevZ Pro: {{error}}",
     "failedSaveApiKey": "Failed to save API key.",
     "failedDeleteApiKey": "Failed to delete API key."
   },

@@ -25,6 +25,7 @@ import { useTranslation } from "react-i18next";
 
 import { useSettings } from "@/hooks/useSettings";
 import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 import {
   chatInputValueAtom,
   chatMessagesByIdAtom,
@@ -884,7 +885,7 @@ export function ChatInput({ chatId }: { chatId?: number }) {
                     render={
                       <button
                         onClick={() => {
-                          ipc.system.openExternalUrl("https://dyad.sh/pro");
+                          openUrl("https://dyad.sh/pro");
                         }}
                         className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer"
                       />
@@ -982,7 +983,7 @@ export function ChatInput({ chatId }: { chatId?: number }) {
                   render={
                     <button
                       onClick={() =>
-                        ipc.system.openExternalUrl("https://dyad.sh/pro")
+                        openUrl("https://dyad.sh/pro")
                       }
                       aria-label={t("voiceToTextPro", "Voice to text (Pro)")}
                       className="px-2 py-2 mb-0.5 text-muted-foreground hover:text-primary rounded-lg transition-colors duration-150 cursor-pointer relative"
@@ -1456,7 +1457,7 @@ function ChatInputActions({
                       key={index}
                       className="flex items-center space-x-2"
                       onClick={() => {
-                        ipc.system.openExternalUrl(
+                        openUrl(
                           `https://www.npmjs.com/package/${pkg}`,
                         );
                       }}

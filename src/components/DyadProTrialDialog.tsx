@@ -13,14 +13,14 @@ export function DyadProTrialDialog({
   onClose,
 }: DyadProTrialDialogProps) {
   const handleStartTrial = () => {
-    ipc.system.openExternalUrl(
+    openUrl(
       "https://academy.dyad.sh/redirect-to-checkout?trialCode=1PRO30&utm_source=dyad-app&utm_medium=app&utm_campaign=setup-dialog-v2",
     );
     onClose();
   };
 
   const handleLearnMore = () => {
-    ipc.system.openExternalUrl(
+    openUrl(
       "https://www.dyad.sh/pro?utm_source=dyad-app&utm_medium=app&utm_campaign=setup-dialog-v2",
     );
   };
@@ -54,7 +54,7 @@ export function DyadProTrialDialog({
           {/* Title */}
           <div className="text-center">
             <h2 className="text-xl font-semibold tracking-tight text-foreground">
-              Unlock Dyad Pro
+              Unlock DevZ Pro
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Start your free 3-day trial today

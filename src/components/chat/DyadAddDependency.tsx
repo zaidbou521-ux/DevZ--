@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 
 import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 
 import { Package } from "lucide-react";
 import { CodeHighlight } from "./CodeHighlight";
@@ -58,7 +59,7 @@ export const DyadAddDependency: React.FC<DyadAddDependencyProps> = ({
                 key={p}
                 onClick={(e) => {
                   e.stopPropagation();
-                  ipc.system.openExternalUrl(
+                  openUrl(
                     `https://www.npmjs.com/package/${p}`,
                   );
                 }}

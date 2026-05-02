@@ -28,6 +28,16 @@ DevZ is a local, open-source AI development platform built as an **Electron desk
 - **Dev (web)**: `npm run dev:web` → serves on port 5000
 - **Dev (Electron)**: `npm run dev` → requires Electron (not available in Replit)
 
+## Fixes Applied
+
+### 1. URL-opening in web mode
+- Created `src/lib/openUrl.ts` — a utility that opens URLs via `window.open()` when Electron IPC is unavailable
+- Replaced all `ipc.system.openExternalUrl(...)` call sites (settings, banners, error boxes, chat, preview panel, etc.) with `openUrl(...)` so clicking any link works in the browser
+
+### 2. "Dyad" → "DevZ" rename
+- All user-visible text across components and i18n translation files (en, pt-BR, zh-CN) has been updated: "Dyad Pro" → "DevZ Pro", "Setup Dyad" → "Setup DevZ", "Dyad Help Bot" → "DevZ Help Bot", etc.
+- Internal variable/function names (e.g. `enableDyadPro`, `DyadProTrialDialog`) were left unchanged to avoid breaking the codebase
+
 ## Notes
 
 - `window.electron` / IPC renderer is not available in web mode; all IPC calls log errors gracefully

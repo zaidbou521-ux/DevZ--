@@ -36,6 +36,7 @@ import { AppSearchDialog } from "../AppSearchDialog";
 import { useVoiceToText } from "@/hooks/useVoiceToText";
 import { useUserBudgetInfo } from "@/hooks/useUserBudgetInfo";
 import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 import { useCallback, useEffect } from "react";
 import { showError } from "@/lib/toast";
 
@@ -85,7 +86,7 @@ export function HomeChatInput({
   ]);
   const placeholder = selectedApp
     ? `Send a message to ${selectedApp.name}...`
-    : `Ask Dyad to build ${typingText ?? ""}`;
+    : `Ask DevZ to build ${typingText ?? ""}`;
 
   // Use the attachments hook
   const {
@@ -233,7 +234,7 @@ export function HomeChatInput({
                   render={
                     <button
                       onClick={() =>
-                        ipc.system.openExternalUrl("https://dyad.sh/pro")
+                        openUrl("https://dyad.sh/pro")
                       }
                       aria-label="Voice to text (Pro)"
                       className="px-2 py-2 mb-0.5 text-muted-foreground hover:text-primary rounded-lg transition-colors duration-150 cursor-pointer relative"
