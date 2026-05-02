@@ -17,6 +17,8 @@
     "bump": "node scripts/bump-version.mjs",
     "clean": "rimraf out scaffold/node_modules",
     "start": "electron-forge start",
+    "dev:web": "vite --config vite.web.config.mts",
+    "build:web": "vite build --config vite.web.config.mts",
     "dev": "cross-env NODE_ENV=development npm start",
     "dev:engine": "cross-env DYAD_ENGINE_URL=http://localhost:8080/v1 npm start",
     "staging:engine": "cross-env DYAD_ENGINE_URL=https://staging---dyad-llm-engine-kq7pivehnq-uc.a.run.app/v1 npm start",
