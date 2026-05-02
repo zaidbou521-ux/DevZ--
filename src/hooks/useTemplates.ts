@@ -2,17 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import { ipc } from "@/ipc/types";
 import { localTemplatesData, type Template } from "@/shared/templates";
 import { queryKeys } from "@/lib/queryKeys";
+import { isIpcUnavailableError } from "@/lib/ipcUtils";
 
 export function useTemplates() {
   const query = useQuery({
     queryKey: queryKeys.templates.all,
     queryFn: async (): Promise<Template[]> => {
-      return ipc.template.getTemplates();
+      try {
+        return await ipc.template.getTemplates();
+      } catch (e) {
+        if (isIpcUnavailableError(e)) return localTemplatesData;
+        throw e;
+      }
     },
     placeholderData: localTemplatesData,
-    meta: {
-      showErrorToast: true,
-    },
   });
 
   return {

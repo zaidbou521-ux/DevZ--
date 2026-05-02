@@ -9,6 +9,7 @@ import type {
   CreateMcpServer,
 } from "@/ipc/types";
 import { queryKeys } from "@/lib/queryKeys";
+import { isIpcUnavailableError } from "@/lib/ipcUtils";
 
 export type Transport = "stdio" | "http";
 
@@ -18,10 +19,14 @@ export function useMcp() {
   const serversQuery = useQuery<McpServer[], Error>({
     queryKey: queryKeys.mcp.servers,
     queryFn: async () => {
-      const list = await ipc.mcp.listServers();
-      return (list || []) as McpServer[];
+      try {
+        const list = await ipc.mcp.listServers();
+        return (list || []) as McpServer[];
+      } catch (e) {
+        if (isIpcUnavailableError(e)) return [];
+        throw e;
+      }
     },
-    meta: { showErrorToast: true },
   });
 
   const serverIds = useMemo(
@@ -44,10 +49,14 @@ export function useMcp() {
   const consentsQuery = useQuery<McpToolConsent[], Error>({
     queryKey: queryKeys.mcp.consents,
     queryFn: async () => {
-      const list = await ipc.mcp.getToolConsents();
-      return (list || []) as McpToolConsent[];
+      try {
+        const list = await ipc.mcp.getToolConsents();
+        return (list || []) as McpToolConsent[];
+      } catch (e) {
+        if (isIpcUnavailableError(e)) return [];
+        throw e;
+      }
     },
-    meta: { showErrorToast: true },
   });
 
   const consentsMap = useMemo(() => {
@@ -152,14 +161,12 @@ export function useMcp() {
       serversQuery.error || toolsByServerQuery.error || consentsQuery.error,
     refetchAll,
 
-    // Mutations
     createServer,
     toggleEnabled,
     updateServer,
     deleteServer,
     setToolConsent,
 
-    // Status flags
     isCreating: createServerMutation.isPending,
     isToggling: updateServerMutation.isPending,
     isUpdatingServer: updateServerMutation.isPending,

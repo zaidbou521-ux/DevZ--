@@ -10,18 +10,18 @@ import type {
   ThemeGenerationModelOption,
 } from "@/ipc/types";
 import { queryKeys } from "@/lib/queryKeys";
+import { isIpcUnavailableError } from "@/lib/ipcUtils";
 
-/**
- * Hook to fetch all custom themes.
- */
 export function useCustomThemes() {
   const query = useQuery({
     queryKey: queryKeys.customThemes.all,
     queryFn: async (): Promise<CustomTheme[]> => {
-      return ipc.template.getCustomThemes();
-    },
-    meta: {
-      showErrorToast: true,
+      try {
+        return await ipc.template.getCustomThemes();
+      } catch (e) {
+        if (isIpcUnavailableError(e)) return [];
+        throw e;
+      }
     },
   });
 
@@ -43,7 +43,6 @@ export function useCreateCustomTheme() {
       return ipc.template.createCustomTheme(params);
     },
     onSuccess: () => {
-      // Invalidate all custom theme queries using prefix matching
       queryClient.invalidateQueries({
         queryKey: queryKeys.customThemes.all,
       });
@@ -61,7 +60,6 @@ export function useUpdateCustomTheme() {
       return ipc.template.updateCustomTheme(params);
     },
     onSuccess: () => {
-      // Invalidate all custom theme queries using prefix matching
       queryClient.invalidateQueries({
         queryKey: queryKeys.customThemes.all,
       });
@@ -77,7 +75,6 @@ export function useDeleteCustomTheme() {
       await ipc.template.deleteCustomTheme({ id });
     },
     onSuccess: () => {
-      // Invalidate all custom theme queries using prefix matching
       queryClient.invalidateQueries({
         queryKey: queryKeys.customThemes.all,
       });
@@ -109,10 +106,12 @@ export function useThemeGenerationModelOptions() {
   const query = useQuery({
     queryKey: queryKeys.themeGenerationModelOptions.all,
     queryFn: async (): Promise<ThemeGenerationModelOption[]> => {
-      return ipc.template.getThemeGenerationModelOptions();
-    },
-    meta: {
-      showErrorToast: true,
+      try {
+        return await ipc.template.getThemeGenerationModelOptions();
+      } catch (e) {
+        if (isIpcUnavailableError(e)) return [];
+        throw e;
+      }
     },
   });
 

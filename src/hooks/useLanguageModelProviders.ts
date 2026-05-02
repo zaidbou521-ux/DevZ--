@@ -4,6 +4,7 @@ import { useSettings } from "./useSettings";
 import { cloudProviders } from "@/lib/schemas";
 import { queryKeys } from "@/lib/queryKeys";
 import { isProviderSetup as isProviderSetupUtil } from "@/lib/providerUtils";
+import { isIpcUnavailableError } from "@/lib/ipcUtils";
 
 export function useLanguageModelProviders() {
   const { settings, envVars } = useSettings();
@@ -11,7 +12,12 @@ export function useLanguageModelProviders() {
   const queryResult = useQuery<LanguageModelProvider[], Error>({
     queryKey: queryKeys.languageModels.providers,
     queryFn: async () => {
-      return ipc.languageModel.getProviders();
+      try {
+        return await ipc.languageModel.getProviders();
+      } catch (e) {
+        if (isIpcUnavailableError(e)) return [];
+        throw e;
+      }
     },
   });
 
@@ -25,12 +31,9 @@ export function useLanguageModelProviders() {
   };
 
   const isAnyProviderSetup = () => {
-    // Check hardcoded cloud providers
     if (cloudProviders.some((provider) => isProviderSetup(provider))) {
       return true;
     }
-
-    // Check custom providers
     const customProviders = queryResult.data?.filter(
       (provider) => provider.type === "custom",
     );
