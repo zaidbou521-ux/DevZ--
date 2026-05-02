@@ -19,7 +19,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { useSettings } from "@/hooks/useSettings";
-import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 import { hasDevZProKey, type UserSettings } from "@/lib/schemas";
 
 export function ProModeSelector() {

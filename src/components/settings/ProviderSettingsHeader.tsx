@@ -8,13 +8,13 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ipc } from "@/ipc/types";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {} from "react";
+import { openUrl } from "@/lib/openUrl";
 
 interface ProviderSettingsHeaderProps {
   providerDisplayName: string;
@@ -35,8 +35,8 @@ function getKeyButtonText({
 }) {
   if (isDyad) {
     return isConfigured
-      ? "Manage Dyad Pro Subscription"
-      : "Setup Dyad Pro Subscription";
+      ? "Manage DevZ Pro Subscription"
+      : "Setup DevZ Pro Subscription";
   }
   return isConfigured ? "Manage API Keys" : "Setup API Key";
 }
@@ -53,7 +53,7 @@ export function ProviderSettingsHeader({
   const handleGetApiKeyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (providerWebsiteUrl) {
-      ipc.system.openExternalUrl(providerWebsiteUrl);
+      openUrl(providerWebsiteUrl);
     }
   };
 

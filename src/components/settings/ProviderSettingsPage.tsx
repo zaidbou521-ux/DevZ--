@@ -66,9 +66,9 @@ export function ProviderSettingsPage({ provider }: ProviderSettingsPageProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  // Use fetched data (or defaults for Dyad)
+  // Use fetched data (or defaults for DevZ Pro)
   const providerDisplayName = isDyad
-    ? "Dyad"
+    ? "DevZ"
     : (providerData?.name ?? "Unknown Provider");
   const providerWebsiteUrl = providerData?.websiteUrl;
   const hasFreeTier = isDyad ? false : providerData?.hasFreeTier;
@@ -128,8 +128,8 @@ export function ProviderSettingsPage({ provider }: ProviderSettingsPageProps) {
     setIsSaving(true);
     setSaveError(null);
     try {
-      // Check if this is the first time user is setting up Dyad Pro
-      const isNewDyadProSetup = isDyad && settings && !hasDevZProKey(settings);
+      // Check if this is the first time user is setting up DevZ Pro
+      const isNewDevZProSetup = isDyad && settings && !hasDevZProKey(settings);
 
       const settingsUpdate: Partial<UserSettings> = {
         providerSettings: {
@@ -145,14 +145,14 @@ export function ProviderSettingsPage({ provider }: ProviderSettingsPageProps) {
       if (isDyad) {
         settingsUpdate.enableDyadPro = true;
         // Set default chat mode to local-agent when user upgrades to pro
-        if (isNewDyadProSetup) {
+        if (isNewDevZProSetup) {
           settingsUpdate.defaultChatMode = "local-agent";
         }
       }
       await updateSettings(settingsUpdate);
       setApiKeyInput(""); // Clear input on success
 
-      // Refetch user budget when Dyad Pro key is saved
+      // Refetch user budget when DevZ Pro key is saved
       if (isDyad) {
         queryClient.invalidateQueries({ queryKey: queryKeys.userBudget.info });
       }
@@ -187,15 +187,15 @@ export function ProviderSettingsPage({ provider }: ProviderSettingsPageProps) {
     }
   };
 
-  // --- Toggle Dyad Pro Handler ---
-  const handleToggleDyadPro = async (enabled: boolean) => {
+  // --- Toggle DevZ Pro Handler ---
+  const handleToggleDevZPro = async (enabled: boolean) => {
     setIsSaving(true);
     try {
       await updateSettings({
         enableDyadPro: enabled,
       });
     } catch (error: any) {
-      showError(`Error toggling Dyad Pro: ${error}`);
+      showError(`Error toggling DevZ Pro: ${error}`);
     } finally {
       setIsSaving(false);
     }
@@ -327,15 +327,15 @@ export function ProviderSettingsPage({ provider }: ProviderSettingsPageProps) {
         {isDyad && !settingsLoading && (
           <div className="mt-6 flex items-center justify-between p-4 bg-(--background-lightest) rounded-lg border">
             <div>
-              <h3 className="font-medium">Enable Dyad Pro</h3>
+              <h3 className="font-medium">Enable DevZ Pro</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Toggle to enable Dyad Pro
+                Toggle to enable DevZ Pro
               </p>
             </div>
             <Switch
-              aria-label="Enable Dyad Pro"
+              aria-label="Enable DevZ Pro"
               checked={settings?.enableDyadPro}
-              onCheckedChange={handleToggleDyadPro}
+              onCheckedChange={handleToggleDevZPro}
               disabled={isSaving}
             />
           </div>

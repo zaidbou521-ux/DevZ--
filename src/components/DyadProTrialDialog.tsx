@@ -1,7 +1,7 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Check, Zap, Wand2, Cpu } from "lucide-react";
-import { ipc } from "@/ipc/types";
+import { openUrl } from "@/lib/openUrl";
 
 interface DyadProTrialDialogProps {
   isOpen: boolean;
