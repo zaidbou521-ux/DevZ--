@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import { ImportAppButton } from "@/components/ImportAppButton";
 import { showError } from "@/lib/toast";
+import { isIpcUnavailableError } from "@/lib/ipcUtils";
 import { invalidateAppQuery } from "@/hooks/useLoadApp";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/queryKeys";
@@ -244,12 +245,18 @@ export default function HomePage() {
       // Select newly created first chat so it appears first in tabs.
       selectChat({ chatId, appId });
     } catch (error) {
-      console.error("Failed to create chat:", error);
-      showError(
-        t(selectedApp ? "failedCreateChat" : "failedCreateApp", {
-          error: (error as any).toString(),
-        }),
-      );
+      if (isIpcUnavailableError(error)) {
+        showError(
+          "إنشاء التطبيقات يتطلب تشغيل DevZ كتطبيق سطح المكتب. يرجى تنزيل التطبيق من الموقع الرسمي.",
+        );
+      } else {
+        console.error("Failed to create chat:", error);
+        showError(
+          t(selectedApp ? "failedCreateChat" : "failedCreateApp", {
+            error: (error as any).toString(),
+          }),
+        );
+      }
       setIsLoading(false);
     }
   };
