@@ -22,7 +22,7 @@ export function ProBanner() {
     return options[Math.floor(Math.random() * options.length)];
   });
 
-  if (settings && hasDyadProKey(settings)) {
+  if (settings && hasDevZProKey(settings)) {
     return null;
   }
 

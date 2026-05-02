@@ -74,6 +74,7 @@ export function ModelPicker() {
 
   // Get display name for the selected model
   const getModelDisplayName = () => {
+    if (!selectedModel) return "Select a model";
     if (selectedModel.provider === "ollama") {
       return (
         ollamaModels.find(
@@ -142,6 +143,9 @@ export function ModelPicker() {
     return null;
   }
   const selectedModel = settings?.selectedModel;
+  if (!selectedModel) {
+    return null;
+  }
   const modelDisplayName = getModelDisplayName();
   // Split providers into primary and secondary groups (excluding auto)
   const providerEntries =

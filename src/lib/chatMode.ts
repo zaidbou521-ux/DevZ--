@@ -61,7 +61,7 @@ export function getUnavailableChatModeReason({
     return undefined;
   }
 
-  if (settings.enableDyadPro === true && !hasDyadProKey(settings)) {
+  if (settings.enableDyadPro === true && !hasDevZProKey(settings)) {
     return "pro-required";
   }
 
